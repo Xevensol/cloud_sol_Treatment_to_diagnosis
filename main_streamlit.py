@@ -82,10 +82,12 @@ Follow the instructions carefully:
 
 - All CPT codes are relevant to ICD codes
 
-5. Make sure to either send irrelevant code in the output or the above 4th point if they are relevant.
+5. If there are irrelevant CPT codes, then give output strictly in this format in form of bullet points giving only irrelevant CPT codes: 
 
-6. If there are irrelevant CPT codes, then give output strictly in this format in form of bullet points giving only irrelevant CPT codes.
+- 99201
+- 45380
 
+Input {codes}
 """
 
 content_prompt = ChatPromptTemplate.from_template(prompt)
