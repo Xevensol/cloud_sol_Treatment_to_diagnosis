@@ -191,7 +191,7 @@ if 'cpt_codes' not in st.session_state:
 # Input for ICD-10 codes
 with st.expander("Enter ICD-10 codes"):
     icd_code = st.text_input("ICD-10 Code")
-    if st.button("Add More", key="button_1"):
+    if st.button("Add", key="button_1"):
         if icd_code:
             st.session_state.icd_10_codes.append(icd_code)
             
@@ -205,7 +205,7 @@ if st.session_state.icd_10_codes:
 # Input for CPT codes
 with st.expander("Enter CPT codes"):
     cpt_code = st.text_input("CPT Code")
-    if st.button("Add More", key="button_2"):
+    if st.button("Add", key="button_2"):
         if cpt_code:
             st.session_state.cpt_codes.append(cpt_code)
 
