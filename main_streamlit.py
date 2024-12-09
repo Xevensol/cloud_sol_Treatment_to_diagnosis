@@ -82,8 +82,9 @@ Follow the instructions carefully:
 
 - All CPT codes are relevant to ICD codes
 
-5. If there are irrelevant CPT codes, then give output strictly in this format in form of bullet points giving only irrelevant CPT codes: 
+5. If there are irrelevant CPT codes, then give output strictly in this format in form of bullet points giving only irrelevant CPT codes.
 
+Example Output
 - 99201
 - 45380
 
