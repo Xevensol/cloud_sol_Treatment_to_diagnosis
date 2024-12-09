@@ -86,11 +86,6 @@ Follow the instructions carefully:
 
 6. If there are irrelevant CPT codes, then give output strictly in this format in form of bullet points giving only irrelevant CPT codes.
 
-Example Output
-- 99201
-- 45380
-
-Input {codes}
 """
 
 content_prompt = ChatPromptTemplate.from_template(prompt)
