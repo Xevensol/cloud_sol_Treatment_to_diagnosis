@@ -254,7 +254,12 @@ with st.container():
 
                 output = evaluate_codes(codes)
                 final_output = reformat_bullet_points(output)
-                output_message("Irrelevant CPT Codes")
+                
+                if final_output == "- All CPT codes are relevant to ICD codes":
+                    output_message("Relevant CPT Codes")
+                else:
+                    output_message("Irrelevant CPT Codes")
+
                 output_final(final_output)
             else:
                 warning_message("Please enter both ICD-10 and CPT codes.")
