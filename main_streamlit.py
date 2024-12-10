@@ -55,6 +55,14 @@ st.markdown(
     
     </style>
     
+    <style>
+        .stTextInput input {
+            background-color: white;
+            border: 2px solid black;
+            color: black;
+        }
+    </style>
+    
     """,
     unsafe_allow_html=True
 )
@@ -78,17 +86,22 @@ Follow the instructions carefully:
 
 3. If a CPT code is relevant to only one ICD-10 code and not to any others, then it should be considered as relevant. Otherwise, it is irrelevant.
 
-4. If all CPT codes are relevant, then give output strictly in this format:
+4. If the input is malformed, return invalid input.
+
+5. If all CPT codes are relevant, then give output strictly in this format:
 
 - All CPT codes are relevant to ICD codes
 
-5. If there are irrelevant CPT codes, then give output strictly in this format in form of bullet points giving only irrelevant CPT codes: 
+6. If there are irrelevant CPT codes, then give output strictly in this format in form of bullet points giving only irrelevant CPT codes: 
 
 - 99201
 - 45380
 
 Input {codes}
 """
+
+
+
 
 content_prompt = ChatPromptTemplate.from_template(prompt)
 
