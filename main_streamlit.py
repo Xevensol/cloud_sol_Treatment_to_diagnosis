@@ -71,37 +71,28 @@ st.markdown(
 openai_api_key = os.getenv('OPENAI_API_KEY')
 
 prompt = """
-You are a medical coding validation assistant. 
+You are a medical coding validation assistant.
 You have knowledge of ICD 10 AM and CPT codes.
-Your task is to evaluate the relevance of multiple CPT codes against multiple ICD-10 codes. 
+Your task is to evaluate the relevance of multiple CPT codes against multiple ICD-10 codes.
 Follow the instructions carefully:
 
-1. You will receive input as a dictionary with two keys:
-   - icd_10: A list of dictionaries where each dictionary contains:
-       - code: The ICD-10 code.
-   - cpt_code: A list of dictionaries where each dictionary contains:
-       - code: The CPT code.
-
-2. Evaluate the relevance of each CPT code against each ICD-10 code (m x n mapping). For every pairing, determine whether the CPT code is relevant to the ICD-10 code based on their descriptions.
-
-3. If a CPT code is relevant to only one ICD-10 code and not to any others, then it should be considered as relevant. Otherwise, it is irrelevant.
-
-4. If the input is malformed, return invalid input.
-
-5. If all CPT codes are relevant, then give output strictly in this format:
-
-- All CPT codes are relevant to ICD codes
-
-6. If there are irrelevant CPT codes, then give output strictly in this format in form of bullet points giving only irrelevant CPT codes: 
-
-- 99201
-- 45380
+1. You will receive input as {codes}.
+2. Evaluate the relevance of each CPT code against each ICD-10 code by using summary of each code.
+3. Relevance is determined as:
+     - If a CPT code is not relevant to each ICD-10 codes, it should be considered as irrelevant.
+     - If a CPT code is relevant to even a single ICD-10 code, it should be considered as relevant
+4. If all CPT codes are relevant, then give output strictly in this format:
+   - All CPT codes are relevant to ICD codes
+5. If there are irrelevant CPT codes, then give output strictly in this format in the form of bullet points listing only irrelevant CPT codes:
+   - 99201
+   - 45380
+6. The input format for ICD-10 code is that it consists of a letter, followed by numbers, a decimal point, and additional characters for further specification of the condition (Example: A01.0).
+7. The input format for CPT code is that it consists of a 5-digit numeric code used to represent medical, surgical, and diagnostic procedures or services (Example: 99213).
+8. If the input is malformed or does not follow the above formats, return:
+   Invalid input
 
 Input {codes}
 """
-
-
-
 
 content_prompt = ChatPromptTemplate.from_template(prompt)
 
@@ -207,7 +198,7 @@ with st.expander("Enter ICD-10 codes"):
     if st.button("Add", key="button_1"):
         if icd_code:
             st.session_state.icd_10_codes.append(icd_code)
-            
+                          
 # Display ICD-10 codes
 if st.session_state.icd_10_codes:
     subheader_func("Added ICD-10 Codes")
@@ -228,6 +219,13 @@ if st.session_state.cpt_codes:
     # Display each CPT code on a new line
     for code in st.session_state.cpt_codes:
         output_final("- "+ code)
+
+# Add "Clear All" button at the end to clear both ICD-10 and CPT codes
+if st.button("Clear All Codes", key="clear_button_all"):
+    # Clear the lists in session state
+    st.session_state.icd_10_codes.clear()  # Clears all ICD-10 codes
+    st.session_state.cpt_codes.clear()  # Clears all CPT codes
+    st.rerun()  # Force a rerun to update the UI
 
 # Evaluate button and spinner
 with st.container():
@@ -251,7 +249,6 @@ with st.container():
                         code = code_entry['code']
                         if code in summary_dict:
                             code_entry['summary'] = summary_dict[code]
-
                 output = evaluate_codes(codes)
                 final_output = reformat_bullet_points(output)
                 
