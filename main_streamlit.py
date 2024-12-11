@@ -220,13 +220,6 @@ if st.session_state.cpt_codes:
     for code in st.session_state.cpt_codes:
         output_final("- "+ code)
 
-# Add "Clear All" button at the end to clear both ICD-10 and CPT codes
-if st.button("Clear All Codes", key="clear_button_all"):
-    # Clear the lists in session state
-    st.session_state.icd_10_codes.clear()  # Clears all ICD-10 codes
-    st.session_state.cpt_codes.clear()  # Clears all CPT codes
-    st.rerun()  # Force a rerun to update the UI
-
 # Evaluate button and spinner
 with st.container():
     st.markdown('<div class="center-button">', unsafe_allow_html=True)
@@ -261,3 +254,11 @@ with st.container():
             else:
                 warning_message("Please enter both ICD-10 and CPT codes.")
     st.markdown('</div>', unsafe_allow_html=True)
+
+# Add "Clear All" button at the end to clear both ICD-10 and CPT codes
+if st.button("Clear All Codes", key="clear_button_all"):
+    # Clear the lists in session state
+    st.session_state.icd_10_codes.clear()  # Clears all ICD-10 codes
+    st.session_state.cpt_codes.clear()  # Clears all CPT codes
+    st.rerun()  # Force a rerun to update the UI
+
